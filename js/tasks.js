@@ -13,13 +13,13 @@ const tasks = {
     // récupération de la liste des tâches
     // /!\ Pour appeler une fonction asynchrone, on utilise await
     const dataTasksList = await tasks.getTasksFromApi();
-    // console.table(dataTasksList);
+    console.table(dataTasksList);
+    console.log(dataTasksList);
 
     // affichage des tâches
     // on boucle sur le tableau pour afficher chaque tâche
     for (const task of dataTasksList) {
-      //console.log(task);
-      //console.log(task.title);
+      console.log(task);
       tasks.insertTaskInDom(task);
     };
 
@@ -38,12 +38,12 @@ const tasks = {
    */
   getTasksFromApi: async function () {
     // Requête vers la liste des tâches
-    const response = await fetch('http://127.0.0.1:8000/api/tasks');
+    const response = await fetch('http://localhost:8080/api/hello');
 
     // On a la réponse, mais on veut avoir les données au format JSON
     const tasksList = await response.json();
 
-    //console.table(tasksList);
+    console.table(tasksList);
 
     return tasksList;
   },
@@ -69,11 +69,11 @@ const tasks = {
     taskTitleElement.textContent = task.title;
 
     // <em> pour avoir le nom de la categorie
-    if (task.category.name) {
+    if (task) {
       const categoryName = document.createElement("em");
-      categoryName.textContent = ' ' + task.category.name;
+      categoryName.textContent = task;
       taskTitleElement.append(categoryName);
-    };
+    }
 
     // <div class="delete"></div>
     const deleteElement = document.createElement('div');
