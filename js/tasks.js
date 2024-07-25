@@ -11,17 +11,16 @@ const tasks = {
     document.querySelector(".tasklist").textContent = "";
 
     // récupération de la liste des tâches
-    // /!\ Pour appeler une fonction asynchrone, on utilise await
     const dataTasksList = await tasks.getTasksFromApi();
     // console.table(dataTasksList);
     // console.log(dataTasksList);
 
     // affichage des tâches
     // on boucle sur le tableau pour afficher chaque tâche
-    for (const task of dataTasksList) {
-      // console.log(task);
-      tasks.insertTaskInDom(task);
-    }
+    dataTasksList.forEach((id, task) => {
+      // console.log(`ID: ${id}, Task: ${task}`);
+      tasks.insertTaskInDom(task, id);
+    });
 
     tasks.createDialog();
 
@@ -42,7 +41,7 @@ const tasks = {
     // On a la réponse, mais on veut avoir les données au format JSON
     const tasksList = await response.json();
 
-    console.table(tasksList);
+    // console.table(tasksList);
 
     return tasksList;
   },
@@ -55,22 +54,15 @@ const tasks = {
    * Insert une tâche dans le DOM.
    * @param {Task} task
    */
-  insertTaskInDom: function (task) {
+  insertTaskInDom: function (id, task) {
     // <li>
     const taskElement = document.createElement("li");
     // <li data-id="0">
-    taskElement.dataset.id = task.id;
+    taskElement.dataset.id = id +1;
 
     // <p>sortir les poubelles</p>
     const taskTitleElement = document.createElement("p");
-    taskTitleElement.textContent = task.title;
-
-    // <em> pour avoir le nom de la categorie
-    if (task) {
-      const categoryName = document.createElement("em");
-      categoryName.textContent = task;
-      taskTitleElement.append(categoryName);
-    }
+    taskTitleElement.textContent = task;
 
     // <div class="delete"></div>
     const deleteElement = document.createElement("div");
@@ -130,7 +122,7 @@ const tasks = {
     liElement.remove();
 
     if (liElement.remove) {
-      const response = await fetch("http://127.0.0.1:8000/api/tasks/" + liId, {
+      const response = await fetch("http://127.0.0.1:8000/api/remove/" + liId, {
         method: "DELETE",
       });
     }
@@ -187,17 +179,18 @@ const tasks = {
     // console.log(event.currentTarget[0].id);
 
     // on récupère notre id par rapport au evant
-    const taskId = event.currentTarget[0].id;
+    const taskDataId = event.currentTarget[0].id;
 
     const taskData = {
       description: inputDialog,
+      id: event.currentTarget[0].id,
     };
 
     if (classDialogButton === "modifier") {
       {
         // ci-dessous le fetch vers l'url
         const datas = await fetch(
-          "http://localhost:8080/api/update/" + taskId,
+          "http://localhost:8080/api/update/" + taskDataId,
           {
             // la méthode http -> PUT
             method: "PUT",
