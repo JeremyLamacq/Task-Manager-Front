@@ -107,25 +107,26 @@ const tasks = {
    * @param {Event} event
    */
   handleDeleteTask: async function (event) {
-    // On récupère la bonne valeur de notre div dans une const
     const deletElement = event.currentTarget;
 
-    // On récupère le parent de notre div dans une const
-    // const liElement = deletElement.parentNode;
-    // Deuxième méthode qui permet de récupérer le li le plus proche
     const liElement = deletElement.closest("li");
 
-    // On récupère le data-id de notre li
     const liId = liElement.dataset.id;
 
-    // on remove notre li ainsi que le contenu de la BDD grâce au data-id
-    liElement.remove();
-
-    if (liElement.remove) {
-      const response = await fetch("http://127.0.0.1:8000/api/remove/" + liId, {
+    if (liElement) {
+      const response = await fetch("http://localhost:8080/api/delete/" + liId, {
         method: "DELETE",
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete task");
     }
+
+    const data = await response.text();
+    console.log(data);
+    }
+
+    liElement.remove();
   },
 
   handleEditTask: function (event) {
