@@ -12,13 +12,10 @@ const tasks = {
 
     // récupération de la liste des tâches
     const dataTasksList = await tasks.getTasksFromApi();
-    console.table(dataTasksList);
-    console.log(dataTasksList);
 
     // affichage des tâches
     // on boucle sur le tableau pour afficher chaque tâche
     dataTasksList.forEach((task) => {
-      console.log(`ID: ${task.id}, Task: ${task.description}`);
       tasks.insertTaskInDom(task);
     });
 
@@ -40,9 +37,6 @@ const tasks = {
 
     // On a la réponse, mais on veut avoir les données au format JSON
     const tasksList = await response.json();
-
-    console.table(tasksList);
-    console.log(tasksList);
 
     return tasksList;
   },
@@ -124,7 +118,6 @@ const tasks = {
     }
 
     const data = await response.text();
-    console.log(data);
     }
 
     liElement.remove();
@@ -151,7 +144,6 @@ const tasks = {
     // on récupère le contenu de notre bouton et on change son contenu
     const classDialogButton = classDialog.lastElementChild.lastElementChild;
     classDialogButton.textContent = "modifier";
-    // console.log(inputId);
   },
 
   /**
@@ -159,7 +151,6 @@ const tasks = {
    */
   handleCreateDialog: function (id) {
     const classDialog = document.querySelector(".modal-dialog");
-    // console.log(classDialog);
     classDialog.classList.add("show");
   },
 
@@ -178,7 +169,6 @@ const tasks = {
     // on récupère le button pour la comparaison
     const classDialogButton =
       classDialog.lastElementChild.lastElementChild.textContent;
-    // console.log(event.currentTarget[0].id);
 
     // on récupère notre id par rapport au evant
     const taskDataId = event.currentTarget[0].id;
@@ -204,9 +194,6 @@ const tasks = {
             body: JSON.stringify(taskData),
           }
         );
-        // on stock le résultat de la requête dans une variable datajson
-        // const datajson = datas.json();
-        // return datajson;
       }
       tasks.init();
     } else {
@@ -221,7 +208,6 @@ const tasks = {
 
           body: JSON.stringify(taskData),
         },
-        console.log(taskData)
       );
       if (response.ok) {
         tasks.init();
