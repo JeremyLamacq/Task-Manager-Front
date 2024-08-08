@@ -12,14 +12,14 @@ const tasks = {
 
     // récupération de la liste des tâches
     const dataTasksList = await tasks.getTasksFromApi();
-    // console.table(dataTasksList);
-    // console.log(dataTasksList);
+    console.table(dataTasksList);
+    console.log(dataTasksList);
 
     // affichage des tâches
     // on boucle sur le tableau pour afficher chaque tâche
-    dataTasksList.forEach((id, task) => {
-      // console.log(`ID: ${id}, Task: ${task}`);
-      tasks.insertTaskInDom(task, id);
+    dataTasksList.forEach((task) => {
+      console.log(`ID: ${task.id}, Task: ${task.description}`);
+      tasks.insertTaskInDom(task);
     });
 
     tasks.createDialog();
@@ -41,7 +41,8 @@ const tasks = {
     // On a la réponse, mais on veut avoir les données au format JSON
     const tasksList = await response.json();
 
-    // console.table(tasksList);
+    console.table(tasksList);
+    console.log(tasksList);
 
     return tasksList;
   },
@@ -54,15 +55,15 @@ const tasks = {
    * Insert une tâche dans le DOM.
    * @param {Task} task
    */
-  insertTaskInDom: function (id, task) {
+  insertTaskInDom: function (task) {
     // <li>
     const taskElement = document.createElement("li");
     // <li data-id="0">
-    taskElement.dataset.id = id +1;
+    taskElement.dataset.id = task.id;
 
     // <p>sortir les poubelles</p>
     const taskTitleElement = document.createElement("p");
-    taskTitleElement.textContent = task;
+    taskTitleElement.textContent = task.description;
 
     // <div class="delete"></div>
     const deleteElement = document.createElement("div");
