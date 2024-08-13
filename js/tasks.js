@@ -180,7 +180,6 @@ const tasks = {
 
     const taskData = {
       description: inputDialog,
-      id: event.currentTarget[0].id,
     };
 
     if (classDialogButton === "modifier") {
