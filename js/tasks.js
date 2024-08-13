@@ -173,6 +173,11 @@ const tasks = {
     // on récupère notre id par rapport au evant
     const taskDataId = event.currentTarget[0].id;
 
+    const taskDataUpdate = {
+      description: inputDialog,
+      id: event.currentTarget[0].id,
+    };
+
     const taskData = {
       description: inputDialog,
       id: event.currentTarget[0].id,
@@ -191,7 +196,7 @@ const tasks = {
               "Content-Type": "application/json",
             },
             // corps de la requête au format json
-            body: JSON.stringify(taskData),
+            body: JSON.stringify(taskDataUpdate),
           }
         );
       }
