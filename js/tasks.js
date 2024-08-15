@@ -33,7 +33,7 @@ const tasks = {
    */
   getTasksFromApi: async function () {
     // Requête vers la liste des tâches
-    const response = await fetch("http://localhost:8080/api/home");
+    const response = await fetch("https://task-manager-back-gccf.onrender.com/api/home");
 
     // On a la réponse, mais on veut avoir les données au format JSON
     const tasksList = await response.json();
@@ -109,7 +109,7 @@ const tasks = {
     const liId = liElement.dataset.id;
 
     if (liElement) {
-      const response = await fetch("http://localhost:8080/api/delete/" + liId, {
+      const response = await fetch("https://task-manager-back-gccf.onrender.com/api/delete/" + liId, {
         method: "DELETE",
       });
 
@@ -186,7 +186,7 @@ const tasks = {
       {
         // ci-dessous le fetch vers l'url
         const datas = await fetch(
-          "http://localhost:8080/api/update/" + taskDataId,
+          "https://task-manager-back-gccf.onrender.com/api/update/" + taskDataId,
           {
             // la méthode http -> PUT
             method: "PUT",
@@ -202,7 +202,7 @@ const tasks = {
       tasks.init();
     } else {
       const response = await fetch(
-        "http://localhost:8080/api/create",
+        "https://task-manager-back-gccf.onrender.com/api/create",
         {
           method: "POST",
 
